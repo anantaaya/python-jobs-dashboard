@@ -48,11 +48,30 @@ REGIONS = {
 
 KEYWORDS = ["Python"]
 
+# --- ФИЛЬТР ПО НАЗВАНИЮ ---
+# Оставляем только те вакансии, где Python-стек указан в самом названии.
+# Это отсекает педагогов, доцентов, аналитиков и прочих, у кого Python
+# упомянут в описании, но работа не про него.
+TITLE_MARKERS = [
+    # Собственно Python и фреймворки
+    "python", "питон", "пайтон",
+    "django", "fastapi", "flask",
+    # Роли, где Python — стандарт
+    #"data engineer", "ml engineer", "ml-разработчик",
+   # "ai engineer", "ai-разработчик",
+]
+
+def is_python_vacancy(v):
+    """Проверяет, указан ли Python-стек в НАЗВАНИИ вакансии."""
+    title = (v.get("job-name") or "").lower()
+    return any(marker in title for marker in TITLE_MARKERS)
+
+
 all_vacancies = {}
-total = len(REGIONS)
+total_regions = len(REGIONS)
 
 for i, (region_name, code) in enumerate(REGIONS.items(), 1):
-    print(f"[{i:>2}/{total}] {region_name:<35}", end=" ", flush=True)
+    print(f"[{i:>2}/{total_regions}] {region_name:<35}", end=" ", flush=True)
 
     region_code = f"{code}00000000000"
     url = f"https://opendata.trudvsem.ru/api/v1/vacancies/region/{region_code}"
@@ -77,24 +96,20 @@ for i, (region_name, code) in enumerate(REGIONS.items(), 1):
 
 print(f"\n✅ Собрано: {len(all_vacancies)} уникальных вакансий")
 
-# Фильтр по Python
-def is_python(v):
-    parts = [
-        v.get("job-name") or "", v.get("duty") or "",
-        v.get("requirements") or "", v.get("qualification") or "",
-        ]
-    for skill in v.get("skills", []):
-        if isinstance(skill, str):
-            parts.append(skill)
-    full = " ".join(parts).lower()
-    return any(m in full for m in ["python", "питон", "django", "fastapi", "flask"])
+# --- ФИЛЬТРАЦИЯ ПО НАЗВАНИЮ ---
+clean = [v for v in all_vacancies.values() if is_python_vacancy(v)]
+print(f"🐍 Python-вакансий (по названию): {len(clean)}")
+print(f"🗑 Отброшено: {len(all_vacancies) - len(clean)}")
 
-clean = [v for v in all_vacancies.values() if is_python(v)]
-print(f"🐍 Python-вакансий: {len(clean)}")
-
+# --- СОХРАНЕНИЕ ---
 os.makedirs("results", exist_ok=True)
+
 with open("results/raw_vacancies.json", "w", encoding="utf-8") as f:
     json.dump(list(all_vacancies.values()), f, ensure_ascii=False, indent=2)
+
 with open("results/python_vacancies.json", "w", encoding="utf-8") as f:
     json.dump(clean, f, ensure_ascii=False, indent=2)
-print("💾 Сохранено")
+
+print("\n💾 Сохранено:")
+print(f"   • raw_vacancies.json — все {len(all_vacancies)} вакансий")
+print(f"   • python_vacancies.json — {len(clean)} Python-вакансий")
