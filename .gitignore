@@ -1,0 +1,9 @@
+.venv/
+.idea/
+.gigaide/
+.vscode/
+pycache/
+*.pyc
+*.pyo
+*.log
+.DS_Store
