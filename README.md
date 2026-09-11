@@ -33,8 +33,7 @@ python-jobs-dashboard/
 ```
 
 ## 🚀 Как запустить локально
-
-
+```
 # Клонировать репозиторий
 git clone https://github.com/anantaaya/python-jobs-dashboard.git
 cd python-jobs-dashboard
@@ -52,8 +51,7 @@ python vacancies.py
 
 # Запустить дашборд
 streamlit run dashboard.py
-
-## 🔗 Ссылка на дашборд
+```
 
 ## 🔗 Ссылка на дашборд
 
