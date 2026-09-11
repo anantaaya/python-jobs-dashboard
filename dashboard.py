@@ -360,15 +360,49 @@ st.divider()
 heading("tools", "Топ-15 навыков", "skills")
 
 NORMALIZE = {
-    "навык работы с linux": "linux",
+    # --- Python и его фреймворки ---
+    "python": "python",
+    "питон": "python",
+    "python / питон": "python",
+    "python/питон": "python",
+    "питон / python": "python",
+    "django framework": "django",
+    "django": "django",
+    "fastapi": "fastapi",
+    "flask": "flask",
+
+    # --- Базы данных ---
     "навык работы с sql": "sql",
     "написание запросов": "sql",
+    "sql": "sql",
+    "postgresql (postgres)": "postgresql",
+    "postgresql": "postgresql",
+    "postgres": "postgresql",
+    "redis": "redis",
+    "mongodb": "mongodb",
+
+    # --- Инфраструктура ---
+    "навык работы с linux": "linux",
+    "linux": "linux",
     "навык работы с git": "git",
+    "git": "git",
+    "nginx": "nginx",
+    "docker": "docker",
+    "rabbitmq": "rabbitmq",
+
+    # --- Общие навыки ---
     "навык работы с microsoft excel": "excel",
+    "excel": "excel",
     "написание тестов и тестирование программного кода": "тестирование",
+    "тестирование": "тестирование",
     "разработка нового функционала": "разработка",
+    "разработка программного обеспечения": "разработка",
+    "разработка": "разработка",
     "умение разбираться и работать с чужим кодом": "чтение чужого кода",
+    "чтение чужого кода": "чтение чужого кода",
     "ответственность , добросовестность": "ответственность",
+    "ответственность": "ответственность",
+    "внимательность": "внимательность",
 }
 
 all_skills = []
