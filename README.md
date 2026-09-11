@@ -22,7 +22,7 @@
 
 ## 📂 Структура проекта
 ```commandline
-hh-parser/
+python-jobs-dashboard/
 ├── dashboard.py # Дашборд Streamlit
 ├── vacancies.py # Парсер вакансий
 ├── requirements.txt # Зависимости
